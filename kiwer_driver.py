@@ -6,7 +6,7 @@ class KiwerDriver(StockBrokerDriver):
         self._api = KiwerAPI()
 
     def login(self, id: str, password: str) -> None:
-        raise NotImplementedError
+        self._api.login(id, password)
 
     def buy(self, stock_code: str, price: int, count: int) -> None:
         self._api.buy(stock_code, count, price)
