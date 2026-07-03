@@ -9,10 +9,11 @@ class KiwerDriver(StockBrokerDriver):
         raise NotImplementedError
 
     def buy(self, stock_code: str, price: int, count: int) -> None:
-        raise NotImplementedError
+        self._api.buy(stock_code, count, price)
+        # 종목코드, 수량, 가격
 
     def sell(self, stock_code: str, price: int, count: int) -> None:
-        raise NotImplementedError
+        self._api.sell(stock_code, count, price)
 
     def get_price(self, stock_code: str) -> int:
         raise NotImplementedError
