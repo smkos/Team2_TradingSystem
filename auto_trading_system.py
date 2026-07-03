@@ -28,7 +28,7 @@ class AutoTradingSystem:
         self._driver.sell(stock_code, price, count)
 
     def get_price(self, stock_code: str) -> int:
-        raise NotImplementedError
+        return self._driver.get_price(stock_code)
 
     def _get_prices(self, stock_code: str) -> list[int]:
         prices = []

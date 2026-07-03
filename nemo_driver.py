@@ -16,4 +16,4 @@ class NemoDriver(StockBrokerDriver):
         self._api.selling_stock(stock_code, price, count)
 
     def get_price(self, stock_code: str) -> int:
-        raise NotImplementedError
+        return self._api.get_market_price(stock_code, minute=200)

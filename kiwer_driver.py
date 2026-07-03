@@ -16,4 +16,4 @@ class KiwerDriver(StockBrokerDriver):
         self._api.sell(stock_code, count, price)
 
     def get_price(self, stock_code: str) -> int:
-        raise NotImplementedError
+        return self._api.current_price(stock_code)
