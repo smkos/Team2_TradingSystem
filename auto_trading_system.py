@@ -13,19 +13,17 @@ class AutoTradingSystem:
     def select_stock_broker(self, broker: str) -> None:
         if broker == "kiwer":
             self._driver = KiwerDriver()
-        elif broker == "nemo":
-            self._driver = NemoDriver()
         else:
-            raise ValueError("Invalid broker")
+            self._driver = NemoDriver()
 
     def login(self, id: str, password: str) -> None:
         raise NotImplementedError
 
     def buy(self, stock_code: str, price: int, count: int) -> None:
-        raise NotImplementedError
+        self._driver.buy(stock_code, price, count)
 
     def sell(self, stock_code: str, price: int, count: int) -> None:
-        raise NotImplementedError
+        self._driver.sell(stock_code, price, count)
 
     def get_price(self, stock_code: str) -> int:
         raise NotImplementedError
@@ -61,5 +59,18 @@ class AutoTradingSystem:
 
         self._driver.buy(stock_code, buy_price, count)
 
-def sell_nice_timing(self, stock_code: str, count: int) -> None:
-        raise NotImplementedError
+    def sell_nice_timing(self, stock_code: str, count: int) -> None:
+        CHECK_COUNT = 3
+        prices = []
+        for i in range(CHECK_COUNT):
+            prices.append(self._driver.get_price(stock_code))
+            time.sleep(0.2)
+
+        if self.check_nice_timing(prices):
+            self._driver.sell(stock_code, prices[-1], count)
+
+    def check_nice_timing(self, prices) -> bool:
+        for i in range(len(prices)-1):
+            if prices[i] <= prices[i + 1]:
+                return False
+        return True
