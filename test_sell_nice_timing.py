@@ -6,6 +6,7 @@ def test_sell_nice_timing_downtrend_sells(trading_system, mock_driver):
     mock_driver.get_price.side_effect = [1200, 1100, 1000]
     with patch('auto_trading_system.time.sleep'):
         trading_system.sell_nice_timing("005930", 5)
+
     mock_driver.sell.assert_called_once_with("005930", 1000, 5)
 
 def test_sell_nice_timing_no_downtrend_no_sell(trading_system, mock_driver):
