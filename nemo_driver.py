@@ -6,7 +6,7 @@ class NemoDriver(StockBrokerDriver):
         self._api = NemoAPI()
 
     def login(self, id: str, password: str) -> None:
-        raise NotImplementedError
+        self._api.cerification(id, password)
 
     def buy(self, stock_code: str, price: int, count: int) -> None:
         self._api.purchasing_stock(stock_code, price, count)
