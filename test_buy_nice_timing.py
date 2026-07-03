@@ -1,3 +1,4 @@
+import pytest
 from unittest.mock import patch
 
 def test_buy_nice_timing_uptrend_buys(trading_system, mock_driver):
@@ -29,8 +30,10 @@ def test_buy_nice_timing_sleep_called(trading_system, mock_driver):
     assert mock_sleep.call_count == 3
     mock_sleep.assert_called_with(0.2)
 
+@pytest.mark.integration
 def test_buy_nice_timing_kiwer(kiwer_system):
     kiwer_system.buy_nice_timing("005930", 100000)
 
+@pytest.mark.integration
 def test_buy_nice_timing_nemo(nemo_system):
     nemo_system.buy_nice_timing("005930", 100000)
