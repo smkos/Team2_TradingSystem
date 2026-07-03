@@ -69,7 +69,7 @@ class AutoTradingSystem:
         if self.check_nice_timing(prices):
             self._driver.sell(stock_code, prices[-1], count)
 
-    def check_nice_timing(self, prices: list[Any]) -> bool:
+    def check_nice_timing(self, prices) -> bool:
         for i in range(len(prices)-1):
             if prices[i] <= prices[i + 1]:
                 return False
