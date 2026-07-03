@@ -27,7 +27,7 @@ def test_buy_nice_timing_sleep_called(trading_system, mock_driver):
     mock_driver.get_price.side_effect = [1000, 1100, 1200]
     with patch('auto_trading_system.time.sleep') as mock_sleep:
         trading_system.buy_nice_timing("005930", 10000)
-    assert mock_sleep.call_count == 3
+    assert mock_sleep.call_count == 2
     mock_sleep.assert_called_with(0.2)
 
 '''

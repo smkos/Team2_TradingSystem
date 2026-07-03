@@ -2,6 +2,9 @@ import time
 from stock_broker_driver import StockBrokerDriver
 
 class AutoTradingSystem:
+    PRICE_CHECK_COUNT = 3
+    PRICE_CHECK_INTERVAL_SECONDS = 0.2
+
     def __init__(self):
         self._driver: StockBrokerDriver = None
 
@@ -20,18 +23,36 @@ class AutoTradingSystem:
     def get_price(self, stock_code: str) -> int:
         raise NotImplementedError
 
-    def buy_nice_timing(self, stock_code: str, amount: int) -> None:
+    def _get_prices(self, stock_code: str) -> list[int]:
         prices = []
 
-        for _ in range(3):
+        for index in range(self.PRICE_CHECK_COUNT):
             prices.append(self._driver.get_price(stock_code))
-            time.sleep(0.2)
 
-        if prices[0] < prices[1] < prices[2]:
-            count = amount // prices[2]
+            if index < self.PRICE_CHECK_COUNT - 1:
+                time.sleep(self.PRICE_CHECK_INTERVAL_SECONDS)
 
-            if count > 0:
-                self._driver.buy(stock_code, prices[2], count)
+        return prices
 
-    def sell_nice_timing(self, stock_code: str, count: int) -> None:
+    def _is_rising_trend(self, prices: list[int]) -> bool:
+        return prices[0] < prices[1] < prices[2]
+
+    def _calculate_buy_count(self, amount: int, price: int) -> int:
+        return amount // price
+
+    def buy_nice_timing(self, stock_code: str, amount: int) -> None:
+        prices = self._get_prices(stock_code)
+
+        if not self._is_rising_trend(prices):
+            return
+
+        buy_price = prices[-1]
+        count = self._calculate_buy_count(amount, buy_price)
+
+        if count <= 0:
+            return
+
+        self._driver.buy(stock_code, buy_price, count)
+
+def sell_nice_timing(self, stock_code: str, count: int) -> None:
         raise NotImplementedError
