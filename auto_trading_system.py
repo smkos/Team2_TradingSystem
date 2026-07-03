@@ -21,7 +21,17 @@ class AutoTradingSystem:
         raise NotImplementedError
 
     def buy_nice_timing(self, stock_code: str, amount: int) -> None:
-        raise NotImplementedError
+        prices = []
+
+        for _ in range(3):
+            prices.append(self._driver.get_price(stock_code))
+            time.sleep(0.2)
+
+        if prices[0] < prices[1] < prices[2]:
+            count = amount // prices[2]
+
+            if count > 0:
+                self._driver.buy(stock_code, prices[2], count)
 
     def sell_nice_timing(self, stock_code: str, count: int) -> None:
         raise NotImplementedError
