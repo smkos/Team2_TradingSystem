@@ -19,7 +19,7 @@ class AutoTradingSystem:
             ValueError(f"Unknown broker: {broker}")
 
     def login(self, id: str, password: str) -> None:
-        raise NotImplementedError
+        self._driver.login(id, password)
 
     def buy(self, stock_code: str, price: int, count: int) -> None:
         self._driver.buy(stock_code, price, count)
