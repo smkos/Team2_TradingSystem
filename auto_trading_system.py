@@ -1,4 +1,6 @@
 import time
+from typing import Any
+
 from stock_broker_driver import StockBrokerDriver
 
 class AutoTradingSystem:
@@ -15,26 +17,28 @@ class AutoTradingSystem:
         raise NotImplementedError
 
     def sell(self, stock_code: str, price: int, count: int) -> None:
-        pass
+        raise NotImplementedError
 
     def get_price(self, stock_code: str) -> int:
-        pass
+        raise NotImplementedError
 
     def buy_nice_timing(self, stock_code: str, amount: int) -> None:
         raise NotImplementedError
 
     def sell_nice_timing(self, stock_code: str, count: int) -> None:
+        CHECK_COUNT = 3
         prices = []
-        for _ in range(3):
+        for i in range(CHECK_COUNT):
             prices.append(self._driver.get_price(stock_code))
             time.sleep(0.2)
 
-        check_sell = True
-        for i in range(2):
-            if prices[i] <= prices[i+1]:
-                check_sell = False
-
-        if check_sell:
+        if self.check_nice_timing(prices):
             self._driver.sell(stock_code, prices[-1], count)
+
+    def check_nice_timing(self, prices: list[Any]) -> bool:
+        for i in range(len(prices)-1):
+            if prices[i] <= prices[i + 1]:
+                return False
+        return True
 
 
