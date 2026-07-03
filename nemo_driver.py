@@ -9,10 +9,11 @@ class NemoDriver(StockBrokerDriver):
         raise NotImplementedError
 
     def buy(self, stock_code: str, price: int, count: int) -> None:
-        raise NotImplementedError
+        self._api.purchasing_stock(stock_code, price, count)
+        # 종목코드, 가격, 수량
 
     def sell(self, stock_code: str, price: int, count: int) -> None:
-        raise NotImplementedError
+        self._api.selling_stock(stock_code, price, count)
 
     def get_price(self, stock_code: str) -> int:
         raise NotImplementedError
