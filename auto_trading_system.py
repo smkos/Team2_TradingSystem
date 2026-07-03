@@ -13,8 +13,10 @@ class AutoTradingSystem:
     def select_stock_broker(self, broker: str) -> None:
         if broker == "kiwer":
             self._driver = KiwerDriver()
-        else:
+        elif broker == "nemo":
             self._driver = NemoDriver()
+        else:
+            ValueError(f"Unknown broker: {broker}")
 
     def login(self, id: str, password: str) -> None:
         raise NotImplementedError
