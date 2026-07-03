@@ -1,5 +1,7 @@
 import time
 from stock_broker_driver import StockBrokerDriver
+from kiwer_driver import KiwerDriver
+from nemo_driver import NemoDriver
 
 class AutoTradingSystem:
     PRICE_CHECK_COUNT = 3
@@ -9,7 +11,12 @@ class AutoTradingSystem:
         self._driver: StockBrokerDriver = None
 
     def select_stock_broker(self, broker: str) -> None:
-        raise NotImplementedError
+        if broker == "kiwer":
+            self._driver = KiwerDriver()
+        elif broker == "nemo":
+            self._driver = NemoDriver()
+        else:
+            raise ValueError("Invalid broker")
 
     def login(self, id: str, password: str) -> None:
         raise NotImplementedError
